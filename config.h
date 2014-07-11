@@ -38,6 +38,29 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
 };
 
+unsigned short wall_index = 0;
+unsigned const short wall_count = 3;
+/* This function is added by me (prenex),
+ to cycle the wallpaper */
+void cycle_wall(const Arg *arg){
+	// cycle the index
+	wall_index = (wall_index + 1) % wall_count;
+	// change wallpaper!
+	char syscall[64];
+	int ret;
+	sprintf(syscall, "xloadimage -onroot -fullscreen /home/prenex/backgrounds/%u.jpg", wall_index);
+	ret = system((const char*) &syscall);
+	if(ret != 0){
+		// if the file is missing, use blank black
+		ret = system("xsetroot -solid \'000000\'");
+	}
+	// force conky to restart to keep ourselves from
+	// the ugly bug that it cached the underlying background
+	// that was unaffected by the wallpaper change
+	// Btw this signals conky to re-read the configuration and restart
+	ret = system("killall -SIGUSR1 conky");
+}
+
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
@@ -89,6 +112,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY,                       XK_c,      cycle_wall,     {0} },
 };
 
 /* button definitions */
