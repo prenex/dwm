@@ -1,7 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*";
+/* static const char font[]            = "-*-terminus-medium-r-*-*-16-*-*-*-*-*-*-*"; */
+static const char font[]            = "xos4Terminal";
 static const char normbordercolor[] = "#444444";
 static const char normbgcolor[]     = "#222222";
 static const char normfgcolor[]     = "#bbbbbb";
@@ -75,11 +76,15 @@ void cycle_wall(const Arg *arg){
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "gnome-terminal", NULL };
+static const char *termcmd[]  = { "xterm", NULL };
 static const char *lockcmd[] = { "slock", NULL };
+static const char *printcmd[] = { "scrot", NULL };  /* Store scrshot where dwm run */
+static const char *aprintcmd[] = { "scrot", "-s" }; /* Select screenshot area 1st */
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY|ShiftMask,             XK_Print,  spawn,          {.v = aprintcmd } },
+	{ MODKEY,                       XK_Print,  spawn,          {.v = printcmd } },
 	{ MODKEY,                       XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
