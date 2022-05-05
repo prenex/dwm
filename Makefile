@@ -46,6 +46,9 @@ install: all
 	@mkdir -p ${DESTDIR}${PREFIX}/bin
 	@cp -f dwm ${DESTDIR}${PREFIX}/bin
 	@chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
+	@echo installing clipshot.sh file to ${DESTDIR}${PREFIX}/bin
+	@cp -f clipshot.sh ${DESTDIR}${PREFIX}/bin
+	@chmod 755 ${DESTDIR}${PREFIX}/bin/clipshot.sh
 	@echo installing manual page to ${DESTDIR}${MANPREFIX}/man1
 	@mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	@sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1

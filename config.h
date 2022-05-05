@@ -64,6 +64,7 @@ void cycle_wall(const Arg *arg){
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define AltMask Mod1Mask  // Alt key
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -79,11 +80,13 @@ static const char *dmenucmd[] = { "dmenu_run", "-fn", font, "-nb", normbgcolor, 
 static const char *termcmd[]  = { "xterm", NULL };
 static const char *lockcmd[] = { "slock", NULL };
 static const char *printcmd[] = { "scrot", NULL };  /* Store scrshot where dwm run */
-static const char *aprintcmd[] = { "scrot", "-s" }; /* Select screenshot area 1st */
+static const char *sprintcmd[] = { "scrot", "-s" }; /* Select screenshot area 1st */
+static const char *aprintcmd[] = { "clipshot.sh", NULL }; /* Select screenshot area 1st, save to clipboard */
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY|ShiftMask,             XK_Print,  spawn,          {.v = aprintcmd } },
+	{ MODKEY|AltMask,               XK_Print,  spawn,          {.v = aprintcmd } },
+	{ MODKEY|ShiftMask,             XK_Print,  spawn,          {.v = sprintcmd } },
 	{ MODKEY,                       XK_Print,  spawn,          {.v = printcmd } },
 	{ MODKEY,                       XK_l,      spawn,          {.v = lockcmd } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
